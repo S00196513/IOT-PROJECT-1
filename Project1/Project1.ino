@@ -1,6 +1,8 @@
 
 #include <Wire.h>
 #include "rgb_lcd.h"
+#include <Bridge.h>
+#include <HttpClient.h>
 
 rgb_lcd lcd;
 
@@ -19,6 +21,7 @@ void setup() {
 }
 
 void loop() {
+    HttpClient client;
     //change temperature to celcius
     float voltage = analogRead(A0) *  (5000/ 1024);
     float temperature = (voltage - 500)/50;
@@ -37,6 +40,7 @@ void loop() {
     {
       lcd.setCursor(0, 1);
       lcd.print("Oven Ready      ");
+      client.get("http://api.pushingbox.com/pushingbox?devid=v001C1912DCC8605");
     }
 }
 
